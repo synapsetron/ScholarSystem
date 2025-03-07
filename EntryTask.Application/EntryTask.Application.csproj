@@ -10,4 +10,24 @@
     <ProjectReference Include="..\EntryTask.Domain\EntryTask.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MediatR\Courses\Create\" />
+    <Folder Include="MediatR\Courses\Delete\" />
+    <Folder Include="MediatR\Courses\GetAll\" />
+    <Folder Include="MediatR\Courses\GetByCourseId\" />
+    <Folder Include="MediatR\Courses\Update\" />
+    <Folder Include="MediatR\Students\Create\" />
+    <Folder Include="MediatR\Students\Delete\" />
+    <Folder Include="MediatR\Students\GetByStudentId\" />
+    <Folder Include="MediatR\Students\GetAll\" />
+    <Folder Include="MediatR\Students\Update\" />
+    <Folder Include="MediatR\Teachers\Create\" />
+    <Folder Include="MediatR\Teachers\Delete\" />
+    <Folder Include="MediatR\Teachers\GetAll\" />
+    <Folder Include="MediatR\Teachers\GetByTeacherId\" />
+    <Folder Include="MediatR\Teachers\Update\" />
+    <Folder Include="Services\" />
+    <Folder Include="Validation\" />
+  </ItemGroup>
+
 </Project>
