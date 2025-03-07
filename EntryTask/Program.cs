@@ -5,6 +5,8 @@ using EntryTask.Infrastructure.Repositories.Realizations.Base;
 using EntryTask.WebAPI.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace EntryTask
 {
@@ -13,6 +15,13 @@ namespace EntryTask
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "EntryTask API", Version = "v1" });
+            });
 
             builder.Configuration.AddUserSecrets<Program>();
 
@@ -29,14 +38,21 @@ namespace EntryTask
             builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             builder.Services.AddControllers();
 
+        
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
                 app.ApplyMigrations();
-            }
 
-            app.UseHttpsRedirection();
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "EntryTask API v1");
+                });
+            }
+           
 
             app.UseAuthorization();
 
