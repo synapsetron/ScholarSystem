@@ -9,6 +9,6 @@ namespace EntryTask.Domain.Entities
 
         public Teacher Teacher { get; set; } = null!;
 
-        public ICollection<Student> Students { get; set; } = new List<Student>();
+        public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
     }
 }
