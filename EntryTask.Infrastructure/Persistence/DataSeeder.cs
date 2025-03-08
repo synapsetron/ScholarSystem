@@ -7,34 +7,85 @@ namespace EntryTask.Infrastructure.Persistence
     {
         public static void Seed(ModelBuilder modelBuilder)
         {
-            // Teachers
-            var teacher1 = new Teacher { Id = 1, Name = "John Smith", Subject = "Mathematics" };
-            var teacher2 = new Teacher { Id = 2, Name = "Sarah Johnson", Subject = "Physics" };
+            // Seed Teachers
+            var teachers = new[]
+            {
+                new Teacher { Id = 1, Name = "John Smith", Subject = "Mathematics" },
+                new Teacher { Id = 2, Name = "Sarah Johnson", Subject = "Physics" },
+                new Teacher { Id = 3, Name = "Michael Brown", Subject = "Computer Science" },
+                new Teacher { Id = 4, Name = "Emily Davis", Subject = "Chemistry" },
+                new Teacher { Id = 5, Name = "David Wilson", Subject = "Biology" }
+            };
+            modelBuilder.Entity<Teacher>().HasData(teachers);
 
-            modelBuilder.Entity<Teacher>().HasData(teacher1, teacher2);
+            // Seed Courses
+            var courses = new[]
+            {
+                new Course { Id = 1, Title = "Calculus I", TeacherId = 1 },
+                new Course { Id = 2, Title = "Linear Algebra", TeacherId = 1 },
+                new Course { Id = 3, Title = "Quantum Mechanics", TeacherId = 2 },
+                new Course { Id = 4, Title = "Particle Physics", TeacherId = 2 },
+                new Course { Id = 5, Title = "Programming Fundamentals", TeacherId = 3 },
+                new Course { Id = 6, Title = "Data Structures", TeacherId = 3 },
+                new Course { Id = 7, Title = "Organic Chemistry", TeacherId = 4 },
+                new Course { Id = 8, Title = "Molecular Biology", TeacherId = 5 }
+            };
+            modelBuilder.Entity<Course>().HasData(courses);
 
-            // Courses
-            var course1 = new Course { Id = 1, Title = "Algebra 101", TeacherId = teacher1.Id };
-            var course2 = new Course { Id = 2, Title = "Quantum Mechanics", TeacherId = teacher2.Id };
-            var course3 = new Course { Id = 3, Title = "Linear Algebra", TeacherId = teacher1.Id };
+            // Seed Students
+            var students = new[]
+            {
+                new Student { Id = 1, Name = "Alice Brown", DateOfBirth = new DateTime(2000, 5, 15) },
+                new Student { Id = 2, Name = "Bob Wilson", DateOfBirth = new DateTime(2001, 3, 21) },
+                new Student { Id = 3, Name = "Charlie Davis", DateOfBirth = new DateTime(2000, 8, 30) },
+                new Student { Id = 4, Name = "Diana Miller", DateOfBirth = new DateTime(2001, 11, 7) },
+                new Student { Id = 5, Name = "Edward Thompson", DateOfBirth = new DateTime(2000, 12, 25) },
+                new Student { Id = 6, Name = "Fiona Garcia", DateOfBirth = new DateTime(2001, 6, 18) },
+                new Student { Id = 7, Name = "George Martinez", DateOfBirth = new DateTime(2000, 9, 4) },
+                new Student { Id = 8, Name = "Hannah Lee", DateOfBirth = new DateTime(2001, 4, 12) }
+            };
+            modelBuilder.Entity<Student>().HasData(students);
 
-            modelBuilder.Entity<Course>().HasData(course1, course2, course3);
+            // Seed Student-Course relationships (many-to-many)
+            var studentCourses = new[]
+            {
+                // Alice is taking Calculus, Quantum Mechanics, and Programming
+                new { StudentsId = 1, CoursesId = 1 },
+                new { StudentsId = 1, CoursesId = 3 },
+                new { StudentsId = 1, CoursesId = 5 },
 
-            // Students
-            var student1 = new Student { Id = 1, Name = "Alice Brown", DateOfBirth = new DateTime(2000, 5, 20) };
-            var student2 = new Student { Id = 2, Name = "Bob White", DateOfBirth = new DateTime(1999, 11, 10) };
-            var student3 = new Student { Id = 3, Name = "Charlie Green", DateOfBirth = new DateTime(2001, 3, 15) };
+                // Bob is taking Linear Algebra and Data Structures
+                new { StudentsId = 2, CoursesId = 2 },
+                new { StudentsId = 2, CoursesId = 6 },
 
-            modelBuilder.Entity<Student>().HasData(student1, student2, student3);
+                // Charlie is taking Physics courses
+                new { StudentsId = 3, CoursesId = 3 },
+                new { StudentsId = 3, CoursesId = 4 },
 
-            // Students that enrolled  to courses
-            modelBuilder.Entity<StudentCourse>().HasData(
-                new StudentCourse { StudentId = 1, CourseId = 1 }, // Alice → Algebra 101
-                new StudentCourse { StudentId = 1, CourseId = 2 }, // Alice → Quantum Mechanics
-                new StudentCourse { StudentId = 2, CourseId = 1 }, // Bob → Algebra 101
-                new StudentCourse { StudentId = 2, CourseId = 3 }, // Bob → Linear Algebra
-                new StudentCourse { StudentId = 3, CourseId = 3 }  // Charlie → Linear Algebra
-            );
+                // Diana is taking Chemistry and Biology
+                new { StudentsId = 4, CoursesId = 7 },
+                new { StudentsId = 4, CoursesId = 8 },
+
+                // Edward is taking Programming courses
+                new { StudentsId = 5, CoursesId = 5 },
+                new { StudentsId = 5, CoursesId = 6 },
+
+                // Fiona is taking Math courses
+                new { StudentsId = 6, CoursesId = 1 },
+                new { StudentsId = 6, CoursesId = 2 },
+
+                // George is taking mixed courses
+                new { StudentsId = 7, CoursesId = 1 },
+                new { StudentsId = 7, CoursesId = 5 },
+                new { StudentsId = 7, CoursesId = 8 },
+
+                // Hannah is taking science courses
+                new { StudentsId = 8, CoursesId = 3 },
+                new { StudentsId = 8, CoursesId = 7 }
+            };
+            
+            // The join table name is generated by EF Core based on the many-to-many relationship
+            modelBuilder.Entity("CourseStudent").HasData(studentCourses);
         }
     }
 }

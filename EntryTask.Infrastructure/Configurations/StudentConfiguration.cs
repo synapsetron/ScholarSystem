@@ -17,11 +17,9 @@ namespace EntryTask.Infrastructure.Configurations
             builder.Property(s => s.DateOfBirth)
                 .IsRequired();
 
-            // Many to many via studentCourses
-            builder.HasMany(s => s.StudentCourses)
-                   .WithOne(sc => sc.Student)
-                   .HasForeignKey(sc => sc.StudentId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(s => s.Courses)
+                   .WithMany(c => c.Students);
+                   
 
             builder.ToTable("Students");
         }

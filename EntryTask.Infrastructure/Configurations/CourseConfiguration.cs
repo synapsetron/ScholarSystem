@@ -17,17 +17,11 @@ namespace EntryTask.Infrastructure.Configurations
             builder.Property(c => c.TeacherId)
                 .IsRequired();
 
-            // 1:N 
+            // 1:N with Teacher
             builder.HasOne(c => c.Teacher)
                    .WithMany(t => t.Courses)
                    .HasForeignKey(c => c.TeacherId)
                    .OnDelete(DeleteBehavior.Restrict);
-
-            // many to many via StudentCourse
-            builder.HasMany(c => c.StudentCourses)
-                   .WithOne(sc => sc.Course)
-                   .HasForeignKey(sc => sc.CourseId)
-                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("Courses");
         }
