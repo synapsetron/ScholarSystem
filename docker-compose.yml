@@ -36,11 +36,11 @@ services:
     networks:
       - app_network
 
-  entrytask:
-    image: ${DOCKER_REGISTRY-}entrytask
+  scholarsystem:
+    image: ${DOCKER_REGISTRY-}scholarsystem
     build:
       context: .
-      dockerfile: EntryTask/Dockerfile
+      dockerfile: ScholarSystem.WebAPI/Dockerfile
     restart: always
     depends_on:
       - mariadb
