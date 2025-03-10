@@ -5,6 +5,7 @@ using EntryTask.Application.Interfaces.Logging;
 using EntryTask.Infrastructure.Repositories.Interfaces.Base;
 using FluentResults;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntryTask.Application.MediatR.Courses.GetAll
 {
@@ -23,8 +24,8 @@ namespace EntryTask.Application.MediatR.Courses.GetAll
         {
             try
             {
-
-                var courses = await _repositoryWrapper.CourseRepository.GetAllAsync();
+                var courses = await _repositoryWrapper.CourseRepository.GetAllAsync(
+                              include: query => query.Include(c => c.Teacher));
 
                 if (courses == null || !courses.Any())
                 {
@@ -42,7 +43,6 @@ namespace EntryTask.Application.MediatR.Courses.GetAll
                 _logger.LogError(ex, "An error occurred while fetching courses.");
                 return Result.Fail("An error occurred while retrieving courses.");
             }
-
         }
     }
 }

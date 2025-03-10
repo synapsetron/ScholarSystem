@@ -4,5 +4,5 @@ using MediatR;
 
 namespace EntryTask.Application.MediatR.Courses.Update
 {
-    public record UpdateCourseCommand(CourseDTO CourseDto) : IRequest<Result<CourseDTO>>;
+    public record UpdateCourseCommand(UpdateCourseDTO UpdateCourseDTO) : IRequest<Result<CourseDTO>>;
 }

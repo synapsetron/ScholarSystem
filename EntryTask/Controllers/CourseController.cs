@@ -1,49 +1,47 @@
-using EntryTask.Application.DTO.Course;
+﻿using EntryTask.Application.DTO.Course;
 using EntryTask.Application.MediatR.Courses.Create;
 using EntryTask.Application.MediatR.Courses.Delete;
 using EntryTask.Application.MediatR.Courses.GetAll;
 using EntryTask.Application.MediatR.Courses.GetByCourseId;
 using EntryTask.Application.MediatR.Courses.Update;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetcode.WebApi.Controllers;
 
+
 namespace EntryTask.WebAPI.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class CourseController : BaseApiController
     {
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
 
-            return HandleResult(await Mediator.Send(new GetAllCoursesQuery()));
+            return HandleResult(await Mediator.Send(new GetAllCoursesQuery(), cancellationToken));
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
         {
-            return HandleResult(await Mediator.Send(new GetCoursesByIdQuery(id)));
+            return HandleResult(await Mediator.Send(new GetCourseByIdQuery(id), cancellationToken));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCourseDTO courseDto)
+        public async Task<IActionResult> Create([FromBody] CreateCourseDTO courseDto, CancellationToken cancellationToken)
         {    
-            return HandleResult(await Mediator.Send(new CreateCourseCommand(courseDto)));
+            return HandleResult(await Mediator.Send(new CreateCourseCommand(courseDto), cancellationToken));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromBody] CourseDTO courseDto)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateCourseDTO courseDto, CancellationToken cancellationToken)
         {
-            return HandleResult(await Mediator.Send(new UpdateCourseCommand(courseDto)));
+            return HandleResult(await Mediator.Send(new UpdateCourseCommand(courseDto), cancellationToken));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {
-            return HandleResult(await Mediator.Send(new DeleteCourseCommand(id)));
+            return HandleResult(await Mediator.Send(new DeleteCourseCommand(id), cancellationToken));
             
         }
     }

@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace EntryTask.Application.DTO.Course
 {
     public  class CreateCourseDTO
     {
-        public string Title { get; set; } = string.Empty;
+        [Required]
+        [StringLength(200)]
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        [Required]
+        [Range(1, 10, ErrorMessage = "Credits must be between 1 and 10.")]
+        public int Credits { get; set; }
+
+        [Required]
         public int TeacherId { get; set; }
     }
 }

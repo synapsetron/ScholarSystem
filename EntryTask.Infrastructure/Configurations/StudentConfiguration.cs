@@ -14,14 +14,15 @@ namespace EntryTask.Infrastructure.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(s => s.DateOfBirth)
+            builder.Property(s => s.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            builder.Property(s => s.EnrollmentDate)
                 .IsRequired();
 
-            builder.HasMany(s => s.Courses)
-                   .WithMany(c => c.Students);
-                   
-
             builder.ToTable("Students");
+
         }
     }
 }

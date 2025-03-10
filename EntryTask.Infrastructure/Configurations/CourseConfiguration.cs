@@ -14,14 +14,17 @@ namespace EntryTask.Infrastructure.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
-            builder.Property(c => c.TeacherId)
+            builder.Property(c => c.Description)
+                .HasColumnType("TEXT"); // Используем длинный текстовый формат
+
+            builder.Property(c => c.Credits)
                 .IsRequired();
 
-            // 1:N with Teacher
+            // One-to-Many: Один курс - один преподаватель
             builder.HasOne(c => c.Teacher)
-                   .WithMany(t => t.Courses)
-                   .HasForeignKey(c => c.TeacherId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(t => t.Courses)
+                .HasForeignKey(c => c.TeacherId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("Courses");
         }

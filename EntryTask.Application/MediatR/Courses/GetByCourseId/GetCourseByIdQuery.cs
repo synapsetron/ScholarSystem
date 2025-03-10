@@ -4,6 +4,6 @@ using MediatR;
 
 namespace EntryTask.Application.MediatR.Courses.GetByCourseId
 {
-    public record GetCoursesByIdQuery(int id) : IRequest<Result<CourseDTO>>;
+    public record GetCourseByIdQuery(int id) : IRequest<Result<CourseDTO>>;
 
 }

@@ -12,6 +12,7 @@ namespace EntryTask.Infrastructure.Persistence
         public DbSet<Student> Students { get; set; } = null!;
         public DbSet<Teacher> Teachers { get; set; } = null!;
         public DbSet<Course> Courses { get; set; } = null!;
+        public DbSet<StudentCourse> StudentCourses { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EntryTask.Domain.Entities
 {
+
     public class Teacher
     {
+        [Key]
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Subject { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [EmailAddress]
+        public string Email { get; set; }
+
+        // Навигационное свойство: у преподавателя могут быть курсы
         public ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

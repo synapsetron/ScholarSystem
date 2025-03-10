@@ -9,9 +9,9 @@ namespace EntryTask.Application.Mapping
         public CourseProfile()
         {
             CreateMap<Course, CourseDTO>()
-                .ForMember(dest => dest.StudentIds, opt => opt.MapFrom(src => src.Students.Select(s => s.Id)));
+          .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.Teacher.Name));
 
-            CreateMap<CreateCourseDTO, Course>();
+            CreateMap<CreateCourseDTO, Course>().ReverseMap();
         }
     }
 }
