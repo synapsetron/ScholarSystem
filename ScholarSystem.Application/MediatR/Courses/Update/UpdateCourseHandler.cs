@@ -4,10 +4,7 @@ using ScholarSystem.Infrastructure.Repositories.Interfaces.Base;
 using FluentResults;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace ScholarSystem.Application.MediatR.Courses.Update
 {
@@ -28,7 +25,7 @@ namespace ScholarSystem.Application.MediatR.Courses.Update
         {
             try
             {
-                // Проверяем, существует ли курс
+                // check if course exist
                 var existingCourse = await _repositoryWrapper.CourseRepository.GetFirstOrDefaultAsync(
                     predicate: c => c.Id == request.UpdateCourseDTO.Id);
 
@@ -38,7 +35,7 @@ namespace ScholarSystem.Application.MediatR.Courses.Update
                     return Result.Fail($"Course with ID {request.UpdateCourseDTO.Id} not found.");
                 }
 
-                // Проверяем, существует ли новый преподаватель (если изменился `TeacherId`)
+                // Check ,does a  new teacher exist ? (if  changed  `TeacherId`)
                 if (existingCourse.TeacherId != request.UpdateCourseDTO.TeacherId)
                 {
                     var newTeacher = await _repositoryWrapper.TeacherRepository.GetFirstOrDefaultAsync(
