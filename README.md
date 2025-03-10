@@ -1,6 +1,6 @@
 # ScholarSystem
 
-**ScholarSystem** is a modern **educational management system** built with **Clean Architecture**, designed to efficiently handle **teacher and course administration**. The project adheres to best software development practices, leveraging **MediatR, CQRS, Repository Pattern, and Unit of Work** for maintainability and scalability.
+**ScholarSystem** is a modern **educational management system** built with **Clean Architecture**, designed to efficiently handle **teacher, course, and student administration**. The project adheres to best software development practices, leveraging **MediatR, CQRS, Repository Pattern, and Unit of Work** for maintainability and scalability.
 
 ---
 
@@ -76,14 +76,29 @@ docker-compose up --build
 
 #### Option 2: Running Manually
 
-- Start MariaDB (locally or in Docker).
-- Apply migrations:
+Follow these steps to run the application locally:
+
+1. **Restore dependencies:**
+
+```sh
+dotnet restore
+```
+
+2. **Build the solution:**
+
+```sh
+dotnet build
+```
+
+3. **Start MariaDB** (locally or via Docker).
+
+4. **Apply database migrations:**
 
 ```sh
 dotnet ef database update --project ScholarSystem.Infrastructure --startup-project ScholarSystem.WebAPI
 ```
 
-- Run the Web API with .NET 9:
+5. **Run the Web API with .NET 9:**
 
 ```sh
 dotnet run --project ScholarSystem.WebAPI
