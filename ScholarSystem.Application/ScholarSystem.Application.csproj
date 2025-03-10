@@ -17,11 +17,6 @@
     <Folder Include="MediatR\Students\GetByStudentId\" />
     <Folder Include="MediatR\Students\GetAll\" />
     <Folder Include="MediatR\Students\Update\" />
-    <Folder Include="MediatR\Teachers\Create\" />
-    <Folder Include="MediatR\Teachers\Delete\" />
-    <Folder Include="MediatR\Teachers\GetAll\" />
-    <Folder Include="MediatR\Teachers\GetByTeacherId\" />
-    <Folder Include="MediatR\Teachers\Update\" />
     <Folder Include="Validation\" />
   </ItemGroup>
 

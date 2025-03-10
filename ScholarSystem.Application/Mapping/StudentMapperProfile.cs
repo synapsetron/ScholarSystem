@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScholarSystem.Application.Mapping
 {
-    internal class StudentMapperProfile
+    public class StudentMapperProfile
     {
     }
 }
