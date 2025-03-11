@@ -12,11 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MediatR\Students\Create\" />
-    <Folder Include="MediatR\Students\Delete\" />
-    <Folder Include="MediatR\Students\GetByStudentId\" />
-    <Folder Include="MediatR\Students\GetAll\" />
-    <Folder Include="MediatR\Students\Update\" />
     <Folder Include="Validation\" />
   </ItemGroup>
 

@@ -1,6 +1,7 @@
 ﻿using ScholarSystem.Infrastructure.Persistence;
 using ScholarSystem.Infrastructure.Repositories.Interfaces.Base;
 using ScholarSystem.Infrastructure.Repositories.Interfaces.Courses;
+using ScholarSystem.Infrastructure.Repositories.Interfaces.StudentCourses;
 using ScholarSystem.Infrastructure.Repositories.Interfaces.Students;
 using ScholarSystem.Infrastructure.Repositories.Interfaces.Teachers;
 using ScholarSystem.Infrastructure.Repositories.Realizations.Course;
@@ -16,6 +17,7 @@ namespace ScholarSystem.Infrastructure.Repositories.Realizations.Base
         private IStudentRepository? _studentRepository;
         private ICourseRepository? _courseRepository;
         private ITeacherRepository? _teacherRepository;
+        private IStudentCourseRepository? _studentCourseRepository;
 
         public RepositoryWrapper(ApplicationDbContext context)
         {
@@ -57,6 +59,19 @@ namespace ScholarSystem.Infrastructure.Repositories.Realizations.Base
                 return _studentRepository;
             }
         }
+
+        public IStudentCourseRepository StudentCourseRepository
+        {
+            get
+            {
+                if (_studentCourseRepository == null)
+                {
+                    _studentCourseRepository = new StudentCourseRepository(_context);
+                }
+                return _studentCourseRepository;
+            }
+        }
+
         public int SaveChanges()
         {
             return _context.SaveChanges();
