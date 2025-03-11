@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScholarSystem.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScholarSystem.WebAPI", "ScholarSystem.WebAPI\ScholarSystem.WebAPI.csproj", "{8FBFCB4F-5535-426E-8FDB-BDB40888ACC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScholarSystem.XUnitTest", "..\ScholarSystem.XUnitTest\ScholarSystem.XUnitTest.csproj", "{E01403BB-FFC7-407F-A24B-BA4B70C344A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScholarSystem.XUnitTest", "ScholarSystem.XUnitTest\ScholarSystem.XUnitTest.csproj", "{B687CF5C-636E-4B70-AD3A-08F5A9332FCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{8FBFCB4F-5535-426E-8FDB-BDB40888ACC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FBFCB4F-5535-426E-8FDB-BDB40888ACC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FBFCB4F-5535-426E-8FDB-BDB40888ACC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E01403BB-FFC7-407F-A24B-BA4B70C344A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E01403BB-FFC7-407F-A24B-BA4B70C344A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E01403BB-FFC7-407F-A24B-BA4B70C344A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E01403BB-FFC7-407F-A24B-BA4B70C344A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B687CF5C-636E-4B70-AD3A-08F5A9332FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B687CF5C-636E-4B70-AD3A-08F5A9332FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B687CF5C-636E-4B70-AD3A-08F5A9332FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B687CF5C-636E-4B70-AD3A-08F5A9332FCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
