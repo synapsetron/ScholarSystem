@@ -13,6 +13,9 @@ using ScholarSystem.Domain.Entities;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ScholarSystem.Application.Interfaces.User;
+using ScholarSystem.Application.Services.User.JWT;
+using ScholarSystem.Application.Services.User;
 
 namespace ScholarSystem.WebAPI.Extensions
 {
@@ -28,6 +31,10 @@ namespace ScholarSystem.WebAPI.Extensions
         {
             services.AddRepositoryServices();
             services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IClaimsService, ClaimsService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IUserService,  UserService>();
             var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
             services.AddAutoMapper(currentAssemblies);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(currentAssemblies));
