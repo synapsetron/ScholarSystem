@@ -16,7 +16,6 @@ namespace ScholarSystem.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
-
             return HandleResult(await Mediator.Send(new GetAllCoursesQuery(), cancellationToken));
         }
 

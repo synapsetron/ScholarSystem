@@ -16,6 +16,9 @@ using Microsoft.IdentityModel.Tokens;
 using ScholarSystem.Application.Interfaces.User;
 using ScholarSystem.Application.Services.User.JWT;
 using ScholarSystem.Application.Services.User;
+using ScholarSystem.Application;
+using FluentValidation.AspNetCore;
+using ScholarSystem.WebAPI.Middleware;
 
 namespace ScholarSystem.WebAPI.Extensions
 {
@@ -35,6 +38,7 @@ namespace ScholarSystem.WebAPI.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IUserService,  UserService>();
+            
             var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
             services.AddAutoMapper(currentAssemblies);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(currentAssemblies));
@@ -57,6 +61,9 @@ namespace ScholarSystem.WebAPI.Extensions
             });
 
             services.AddScoped<ApplicationDbContext>();
+
+            services.AddApplicationServices();
+            services.AddFluentValidationAutoValidation();
             services.AddLogging();
             services.AddControllers();
         }

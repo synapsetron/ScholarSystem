@@ -226,7 +226,7 @@ namespace ScholarSystem.Application.Services.User
                 throw new Exception("User not found");
             }
 
-            user.UpdateAt = DateTime.Now;
+            user.UpdateAt = DateTime.Now; 
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.Email = request.Email;

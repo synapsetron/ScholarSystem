@@ -1,5 +1,5 @@
 using ScholarSystem.WebAPI.Extensions;
-
+using ScholarSystem.WebAPI.Middleware;
 using Serilog;
 namespace ScholarSystem
 {
@@ -10,7 +10,7 @@ namespace ScholarSystem
             var builder = WebApplication.CreateBuilder(args);
 
 
-      
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Configuration.AddUserSecrets<Program>();
             builder.Services.AddSingleton(Log.Logger);
             builder.Services.AddSwaggerServices();
@@ -36,7 +36,7 @@ namespace ScholarSystem
             await app.ApplyMigrations();
 
             app.UseCors("AllowAllOrigins");
-            app.UseExceptionHandler();
+            //app.UseExceptionHandler();
             app.MapControllers();
             app.Run();
         }
