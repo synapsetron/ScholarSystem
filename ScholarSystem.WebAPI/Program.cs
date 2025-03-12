@@ -12,13 +12,15 @@ namespace ScholarSystem
 
       
             builder.Configuration.AddUserSecrets<Program>();
-        
-
             builder.Services.AddSingleton(Log.Logger);
             builder.Services.AddSwaggerServices();
             builder.Services.AddApplicationServices(builder.Configuration);
             builder.Services.AddCustomServices();
+            builder.Services.AddIdentityServices(builder.Configuration);
+            builder.Services.AddAuthServices(builder.Configuration);
+            builder.Services.AddCorsPolicies();
             builder.Services.AddControllers();
+            builder.Services.AddAuthentication();
 
             var app = builder.Build();
 
@@ -33,9 +35,7 @@ namespace ScholarSystem
             }
             await app.ApplyMigrations();
 
-
-            app.UseAuthorization();
-
+            app.UseCors("AllowAllOrigins");
             app.MapControllers();
             app.Run();
         }

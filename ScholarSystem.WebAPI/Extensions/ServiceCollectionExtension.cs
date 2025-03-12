@@ -8,6 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using ScholarSystem.Application.Mapping;
+using Microsoft.AspNetCore.Identity;
+using ScholarSystem.Domain.Entities;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ScholarSystem.WebAPI.Extensions
 {
@@ -36,7 +41,7 @@ namespace ScholarSystem.WebAPI.Extensions
             services.AddHttpClient();
 
             services.Configure<ConnectionStringsOptions>(configuration.GetSection(ConnectionStringsOptions.SectionName));
-
+            services.Configure<JwtSettingsOptions>(configuration.GetSection(JwtSettingsOptions.SectionName));
 
             services.AddDbContext<ApplicationDbContext>((provider, options) =>
             {
@@ -47,6 +52,54 @@ namespace ScholarSystem.WebAPI.Extensions
             services.AddScoped<ApplicationDbContext>();
             services.AddLogging();
             services.AddControllers();
+        }
+        public static void AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+        }
+        public static void AddAuthServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions<JwtSettingsOptions>()
+                .Bind(configuration.GetSection(JwtSettingsOptions.SectionName))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            services.AddSingleton<IValidateOptions<JwtSettingsOptions>, ValidateJwtSettingsOptions>();
+
+            // take a settings from jwt
+            var jwtSettings = configuration.GetSection(JwtSettingsOptions.SectionName).Get<JwtSettingsOptions>();
+
+            if (jwtSettings == null || string.IsNullOrEmpty(jwtSettings.Secret))
+            {
+                throw new InvalidOperationException("JWT Secret key is missing in configuration.");
+            }
+
+            var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            services.AddAuthorization();
         }
 
         public static void AddSwaggerServices(this IServiceCollection services)
