@@ -36,6 +36,7 @@ namespace ScholarSystem
             await app.ApplyMigrations();
 
             app.UseCors("AllowAllOrigins");
+            app.UseExceptionHandler();
             app.MapControllers();
             app.Run();
         }

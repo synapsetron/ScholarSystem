@@ -62,9 +62,16 @@ namespace ScholarSystem.WebAPI.Extensions
         }
         public static void AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>( o =>
+            {
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = true;
+                o.Password.RequireUppercase = false;
+                o.Password.RequiredLength = 8;
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders();
+
         }
         public static void AddAuthServices(this IServiceCollection services, IConfiguration configuration)
         {
@@ -116,6 +123,33 @@ namespace ScholarSystem.WebAPI.Extensions
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApi", Version = "v1" });
                 opt.CustomSchemaIds(x => x.FullName);
+
+                opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token in the following format: {your token here} do not add the word 'Bearer' before it."
+                });
+                opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                    }
+                });
             });
         }
     }
