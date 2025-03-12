@@ -1,6 +1,6 @@
 # ScholarSystem
 
-**ScholarSystem** is a modern **educational management system** built with **Clean Architecture**, designed to efficiently handle **teacher, course, and student administration**. The project adheres to best software development practices, leveraging **MediatR, CQRS, Repository Pattern, and Unit of Work** for maintainability and scalability.
+**ScholarSystem** is a modern **educational management system** built with **Clean Architecture**, designed to efficiently handle **teacher, course, and student administration**. The project adheres to best software development practices, leveraging **MediatR, CQRS, Repository Pattern, Unit of Work, and JWT-based authentication** for maintainability and scalability.
 
 ---
 
@@ -24,12 +24,34 @@ The project structure ensures clear separation of concerns:
 | **ORM**                  | Entity Framework Core                          |
 | **Design Patterns**      | Repository, Unit of Work, Options Pattern      |
 | **Architecture**         | Clean Architecture, CQRS                       |
+| **Authentication**       | JWT + ASP.NET Core Identity                    |
 | **MediatR**              | CQRS Implementation                            |
 | **Validation**           | FluentValidation                               |
+| **Error Handling**       | Global Exception Handling (Middleware)         |
+| **Security**             | JWT Authentication, Role-based Authorization   |
 | **Logging**              | Serilog                                        |
 | **Mapping**              | AutoMapper                                     |
-| **Error Handling**       | FluentResults                                  |
+| **API Documentation**    | Swagger / OpenAPI                              |
 | **Dependency Injection** | ASP.NET Core DI                                |
+
+---
+
+## 🔐 Authentication & Security
+
+ScholarSystem implements **JWT-based authentication** using **ASP.NET Core Identity**. It provides:
+
+- ✅ **User Registration & Login** – Secure authentication using JWT.
+- ✅ **Role-based Authorization** – Supports different user roles (e.g., Admin, Teacher, Student).
+- ✅ **Token Refresh** – Securely refresh access tokens via refresh tokens.
+- ✅ **Password Hashing & Security** – Utilizes Identity's built-in hashing mechanism.
+- ✅ **Global Exception Handling** – Catches and handles errors consistently across the API.
+
+### 🔑 JWT Token Flow
+
+1. **User logs in** and receives an `Access Token` and `Refresh Token`.
+2. `Access Token` is used for authenticating API requests.
+3. If `Access Token` expires, the `Refresh Token` can be used to generate a new one.
+4. **Revocation Support** – Refresh tokens can be revoked in case of security concerns.
 
 ---
 
@@ -62,6 +84,11 @@ Navigate to the `ScholarSystem.WebAPI` directory and run:
 ```sh
 dotnet user-secrets set "Database:ServerVersion" "10.6.14-mariadb"
 dotnet user-secrets set "Database:DefaultConnection" "Server=mariadb;Port=3306;Database=mydatabase;User=root;Password=rootpassword;Protocol=TCP;"
+dotnet user-secrets set "JwtSettings:Secret" "supersecretkeythatshouldbeverylongandrandom"
+dotnet user-secrets set "JwtSettings:Issuer" "ScholarSystem"
+dotnet user-secrets set "JwtSettings:Audience" "ScholarSystemUsers"
+dotnet user-secrets set "JwtSettings:AccessTokenExpirationMinutes" "60"
+dotnet user-secrets set "JwtSettings:RefreshTokenExpirationDays" "7"
 ```
 
 ### 4️⃣ Running the Application
@@ -127,8 +154,12 @@ If using Docker, phpMyAdmin is accessible via:
 - ✅ **Teacher Management** – Create, update, delete, and retrieve teachers.
 - ✅ **Course Administration** – Assign teachers, manage courses, and track student enrollments.
 - ✅ **Student Management** – Create, update, delete, and retrieve students.
-- ✅ **MediatR & CQRS** – Separates Queries (read operations) and Commands (write operations) for enhanced scalability.
+- ✅ **JWT Authentication** – Secure authentication using access & refresh tokens.
+- ✅ **ASP.NET Core Identity** – Manages user authentication, password hashing, and roles.
+- ✅ **Role-based Authorization** – Ensures only authorized users can access certain features.
+- ✅ **Global Exception Handling** – Provides structured error handling across all endpoints.
+- ✅ **MediatR & CQRS – Separates Queries** (read operations) and Commands (write operations) for enhanced scalability.
 - ✅ **Repository & Unit of Work** – Ensures reliable data persistence.
 - ✅ **FluentValidation & FluentResults** – Provides structured error handling and validation.
+- ✅ **Swagger API Documentation** – Easy-to-use interactive documentation for API testing.
 - ✅ **Docker Support** – Easy deployment via docker-compose.
-
